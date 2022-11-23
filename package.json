@@ -1,0 +1,19 @@
+{
+  "name": "movies-explorer-api",
+  "version": "1.0.0",
+  "description": "Бекенд диплоного проекта курса web разработчика Яндекс практикума",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lugovskoy-Maxim/movies-explorer-api.git"
+  },
+  "author": "Maxim Lugovskoy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lugovskoy-Maxim/movies-explorer-api/issues"
+  },
+  "homepage": "https://github.com/Lugovskoy-Maxim/movies-explorer-api#readme"
+}
