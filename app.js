@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate'); // проверка валидности ссылок и email
 
-const { PORT = 3000, MANGO_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env; // localhost - выдеат ошибку на рабочем пк (дома проверить )
+const { PORT = 3000, MANGO_URL = 'mongodb://127.0.0.1:27017/moviesdb' } = process.env; // localhost - выдеат ошибку на рабочем пк (дома проверить ) вынести url в .env
 
 const app = express();
 app.use(cookieParser()); // анализирует файлЫ cookie, прикрепленных к запросу
