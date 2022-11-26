@@ -2,10 +2,10 @@ const router = require('express').Router();
 const { validateCreateMovies, validateMoviesId } = require('../middlewares/validation');
 
 const {
-  createMovies, removeMovies, getMovies,
+  createMovies, removeMovies, getSavedMovies,
 } = require('../controllers/movies');
 
-router.get('/movies', getMovies);
+router.get('/movies', getSavedMovies);
 router.patch('/movies', validateCreateMovies, createMovies);
 router.patch('/movies/:id', validateMoviesId, removeMovies);
 

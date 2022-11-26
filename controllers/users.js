@@ -1,4 +1,3 @@
-// jwtToken
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/users');
@@ -12,7 +11,7 @@ module.exports.registrations = (req, res, next) => {
   const {
     name, email, password,
   } = req.body;
-  bcrypt
+  bcrypt // хеширую пароль чтобы хранить его в зашифрованном виде
     .hash(password, 10)
     .then((hash) => User.create({
       email,
@@ -64,16 +63,20 @@ module.exports.getUserInfo = (req, res, next) => {
 };
 
 module.exports.updateUser = (req, res, next) => {
-  const { name, about } = req.body;
+  const { name, email } = req.body;
   User.findByIdAndUpdate(
     req.user._id,
-    { name, about },
+    { name, email },
     { new: true, runValidators: true },
   )
     .then((user) => res.send({ user }))
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные пользователя'));
+        return;
+      }
+      if (err.name === 'MongoError' && err.code === 11000) {
+        next(new ConflictError('Указанный адрес электронной почты уже используется'));
         return;
       }
       next(err);
