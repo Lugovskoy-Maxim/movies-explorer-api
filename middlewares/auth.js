@@ -11,7 +11,7 @@ const auth = (req, res, next) => {
   }
   let payload;
   try {
-    payload = verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'secret');
+    payload = verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'JWT_DEV'); // если не продакшен то используется JWT_DEV
   } catch (err) {
     throw new AuthError('Необходима авторизация');
   }

@@ -1,6 +1,5 @@
 # movies-explorer-api
 
-
 Используемые библиотеки:
 - dotenv
 - express
@@ -11,3 +10,4 @@
 - winston (логер)
 - express-winston (логер)
 - bcrypt (хеширование паролей)
+- express-rate-limit (ограничение количества запросов)
