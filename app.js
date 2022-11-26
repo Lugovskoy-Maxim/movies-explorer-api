@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const celebrate = require('celebrate'); // проверка валидности ссылок и email
 const auth = require('./middlewares/auth');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routesUser = require('./routes/users');
 const routesMovies = require('./routes/movies');
 const NotFoundError = require('./errors/NotFoundError');
@@ -13,6 +14,7 @@ const { validateLogin, validateRegisterations } = require('./middlewares/validat
 const { PORT = 3000, MANGO_URL = 'mongodb://localhost:27017/moviesdb' } = process.env; // localhost - выдеат ошибку на рабочем пк (дома проверить ) вынести url в .env
 
 const app = express();
+app.use(requestLogger);
 app.use(helmet());
 app.use(cookieParser()); // анализирует файлЫ cookie, прикрепленных к запросу
 app.use(express.json()); // анализирует входящие запросы с полезной нагрузкой JSON
@@ -31,6 +33,8 @@ app.use(routesUser);
 app.use(routesMovies);
 
 app.use('/*', () => { throw new NotFoundError('Запрашиваемая страница не найдена'); }); // при переходе на несуществующий адрес
+
+app.use(errorLogger);
 app.use(celebrate.errors()); // обработчик ошибок валидации ссылок и почты из middleware/validation
 
 app.use((err, req, res, next) => { // центролизованный обработчик ошибок (нужно вынести)
