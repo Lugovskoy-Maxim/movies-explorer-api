@@ -38,7 +38,6 @@ const validateCreateMovies = celebrate({
     image: urlValidator, // ссылка на постер. Обязательное поле-строка. URL-адрес
     trailerLink: urlValidator, // ссылка на трейлер. Обязательное поле-строка. URL-адрес
     thumbnail: urlValidator, // мальенькое изображение Обязательное поле-строка URL-адрес
-    owner: Joi.string().required(), // id пользователя, который сохранил фильм. Обязательное поле.
     movieId: Joi.string().required(), // id фильма, из ответа от MoviesExplorer. Обязательное поле.
     nameRU: Joi.string().required(), // название фильма на рус языке. Обязательное поле-строка.
     nameEN: Joi.string().required(), // название фильма на анг языке. Обязательное поле-строка.
