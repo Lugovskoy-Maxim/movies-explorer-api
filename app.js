@@ -4,13 +4,8 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const celebrate = require('celebrate'); // проверка валидности ссылок и email
 const { cors } = require('./middlewares/cors');
-const auth = require('./middlewares/auth');
+const indexRouter = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const routesUser = require('./routes/users');
-const routesMovies = require('./routes/movies');
-const NotFoundError = require('./errors/NotFoundError');
-const { registrations, login } = require('./controllers/users');
-const { validateLogin, validateRegisterations } = require('./middlewares/validation');
 
 const { PORT = 3000, MANGO_URL = 'mongodb://localhost:27017/moviesdb' } = process.env; // localhost - выдеат ошибку на рабочем пк (дома проверить ) вынести url в .env
 
@@ -23,25 +18,13 @@ app.use(express.json()); // анализирует входящие запрос
 app.use(express.urlencoded({ extended: true })); // переназначает символы которые могут нанести вред
 mongoose.connect(MANGO_URL);
 
-app.use('/signin', validateLogin, login);
-app.use('/signup', validateRegisterations, registrations);
-
-app.use(auth);
-
-app.get('/signout', (req, res) => {
-  res.clearCookie('jwtToken').send({ message: 'Выход' });
-});
-app.use(routesUser);
-app.use(routesMovies);
-
-app.use('/*', () => { throw new NotFoundError('Запрашиваемая страница не найдена'); }); // при переходе на несуществующий адрес
+app.use(indexRouter);
 
 app.use(errorLogger);
 app.use(celebrate.errors()); // обработчик ошибок валидации ссылок и почты из middleware/validation
 
 app.use((err, req, res, next) => { // центролизованный обработчик ошибок (нужно вынести)
   const { statusCode, message } = err;
-  console.log(err); // удалить перед деплоем
   res
     .status(statusCode)
     .send({
@@ -53,5 +36,5 @@ app.use((err, req, res, next) => { // центролизованный обра�
 });
 
 app.listen(PORT, () => {
-  console.log(`Приложение запущено на порту: ${PORT} `); // удалить или закоментить консоль после деплося
+  console.log(`Приложение запущено на порту: ${PORT} `);
 });
