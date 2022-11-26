@@ -33,8 +33,8 @@ const userSchema = new mongoose.Schema(
 );
 
 // проверка логина а после пароля (по очереди что бы не грузить сервер лишней работой)
-// eslint-disable-next-line func-names
-userSchema.statics.findUserByCredentials = function (email, password) {
+
+userSchema.statics.findUserByCredentials = function checkUser(email, password) {
   return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
