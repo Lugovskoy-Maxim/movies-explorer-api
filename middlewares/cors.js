@@ -1,10 +1,10 @@
 const allowedCors = [ // список разрешенных адресов
-  'https://api.lugo.nomoredomains.icu',
-  'http://api.lugo.nomoredomains.icu',
+  'https://api.lugovskoy-movies.nomoredomains.club',
+  'http://api.lugovskoy-movies.nomoredomains.club',
   'https://jsdeveloper.ru',
   'http://jsdeveloper.ru',
-  'https://lugo.nomoredomains.icu',
-  'http://lugo.nomoredomains.icu',
+  'https://lugovskoy-movies.nomoredomains.club',
+  'http://lugovskoy-movies.nomoredomains.club',
   'http://localhost:3000',
   'http://localhost:3001',
 ];

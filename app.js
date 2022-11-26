@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
@@ -9,7 +10,9 @@ const errorHandler = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const rateLimiter = require('./middlewares/rateLimiter');
 
-const { PORT = 3000, MANGO_URL = 'mongodb://localhost:27017/moviesdb' } = process.env; // localhost - выдеат ошибку на рабочем пк (дома проверить ) вынести url в .env
+const { NODE_ENV, MANGO_URL_PROD } = process.env;
+
+const { PORT = 3000, MANGO_URL = NODE_ENV === 'production' ? MANGO_URL_PROD : 'mongodb://localhost:27017/movies_dev' } = process.env; // localhost - выдеат ошибку на рабочем пк (дома проверить ) вынести url в .env
 
 const app = express();
 app.use(cors);
