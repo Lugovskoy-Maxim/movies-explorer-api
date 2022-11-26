@@ -42,7 +42,7 @@ module.exports.createMovies = (req, res, next) => {
 };
 
 module.exports.removeMovies = (req, res, next) => {
-  Movie.findById(req.params.movieId)
+  Movie.findById(req.params.id)
     .orFail(new NotFoundError('Фильм не найден'))
     .then((movie) => {
       const newLocalOwner = movie.owner.toString() === req.user._id;

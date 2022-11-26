@@ -7,6 +7,6 @@ const {
 
 router.get('/movies', getSavedMovies);
 router.patch('/movies', validateCreateMovies, createMovies);
-router.patch('/movies/:id', validateMoviesId, removeMovies);
+router.delete('/movies/:id', validateMoviesId, removeMovies);
 
 module.exports = router;
