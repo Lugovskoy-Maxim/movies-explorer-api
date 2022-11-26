@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const celebrate = require('celebrate'); // проверка валидности ссылок и email
+const { cors } = require('./middlewares/cors');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routesUser = require('./routes/users');
@@ -14,6 +15,7 @@ const { validateLogin, validateRegisterations } = require('./middlewares/validat
 const { PORT = 3000, MANGO_URL = 'mongodb://localhost:27017/moviesdb' } = process.env; // localhost - выдеат ошибку на рабочем пк (дома проверить ) вынести url в .env
 
 const app = express();
+app.use(cors);
 app.use(requestLogger);
 app.use(helmet());
 app.use(cookieParser()); // анализирует файлЫ cookie, прикрепленных к запросу
@@ -39,7 +41,7 @@ app.use(celebrate.errors()); // обработчик ошибок валидац
 
 app.use((err, req, res, next) => { // центролизованный обработчик ошибок (нужно вынести)
   const { statusCode, message } = err;
-
+  console.log(err); // удалить перед деплоем
   res
     .status(statusCode)
     .send({

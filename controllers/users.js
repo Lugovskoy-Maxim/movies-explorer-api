@@ -75,7 +75,7 @@ module.exports.updateUser = (req, res, next) => {
         next(new BadRequestError('Переданы некорректные данные пользователя'));
         return;
       }
-      if (err.name === 'MongoError' && err.code === 11000) {
+      if (err.name === 'MongoServerError' && err.code === 11000) {
         next(new ConflictError('Указанный адрес электронной почты уже используется'));
         return;
       }
