@@ -1,4 +1,6 @@
 # movies-explorer-api
+Ссылка на API сервер: https://api.lugovskoy-movies.nomoredomains.club/
+IP: адрес сервера 51.250.88.43
 
 Используемые библиотеки:
 - dotenv
