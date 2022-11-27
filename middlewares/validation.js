@@ -1,8 +1,9 @@
 const { celebrate, Joi, CelebrateError } = require('celebrate');
 const { isURL } = require('validator');
+const { BAD_URL_MESSAGE } = require('../Utils/constants');
 
 const urlValidator = Joi.string().required().custom((value) => {
-  if (!isURL(value)) throw new CelebrateError('Некорректная ссылка на изображение');
+  if (!isURL(value)) throw new CelebrateError(BAD_URL_MESSAGE);
   return value;
 });
 
@@ -35,10 +36,10 @@ const validateCreateMovies = celebrate({
     duration: Joi.number().required(), // длительность фильма. Обязательное поле-число.
     year: Joi.string().required(), // год выпуска фильма. Обязательное поле-строка.
     description: Joi.string().required(), // описание фильма. Обязательное поле-строка.
-    image: urlValidator, // ссылка на постер. Обязательное поле-строка. URL-адрес
+    image: Joi.string().required(), // urlValidator ссылка на постер. Обязательное поле. URL-адрес
     trailerLink: urlValidator, // ссылка на трейлер. Обязательное поле-строка. URL-адрес
     thumbnail: urlValidator, // мальенькое изображение Обязательное поле-строка URL-адрес
-    movieId: Joi.string().required(), // id фильма, из ответа от MoviesExplorer. Обязательное поле.
+    movieId: Joi.number().required(), // id фильма, из ответа от MoviesExplorer. Обязательное поле.
     nameRU: Joi.string().required(), // название фильма на рус языке. Обязательное поле-строка.
     nameEN: Joi.string().required(), // название фильма на анг языке. Обязательное поле-строка.
   }),

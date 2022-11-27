@@ -11,8 +11,9 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const rateLimiter = require('./middlewares/rateLimiter');
 
 const { NODE_ENV, MONGO_URL_PROD } = process.env;
+const { MONGO_URL_DEV } = require('./Utils/constants');
 
-const { PORT = 3000, MONGO_URL = NODE_ENV === 'production' ? MONGO_URL_PROD : 'mongodb://localhost:27017/movies_dev' } = process.env; // localhost - выдеат ошибку на рабочем пк (дома проверить )
+const { PORT = 3000, MONGO_URL = NODE_ENV === 'production' ? MONGO_URL_PROD : MONGO_URL_DEV } = process.env;
 
 const app = express();
 app.use(cors);

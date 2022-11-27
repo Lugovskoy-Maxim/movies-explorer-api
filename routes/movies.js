@@ -6,7 +6,7 @@ const {
 } = require('../controllers/movies');
 
 router.get('/movies', getSavedMovies);
-router.patch('/movies', validateCreateMovies, createMovies);
+router.post('/movies', validateCreateMovies, createMovies);
 router.delete('/movies/:id', validateMoviesId, removeMovies);
 
 module.exports = router;

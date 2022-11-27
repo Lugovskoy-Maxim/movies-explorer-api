@@ -1,40 +1,22 @@
 const Movie = require('../models/movies');
-const NotFoundError = require('../errors/NotFoundError'); // 404
-const BadRequestError = require('../errors/BadRequestError'); // 400
-const ForbiddenErrors = require('../errors/ForbiddenErrors'); // 403
+const {
+  NotFoundError,
+  BadRequestError,
+  ForbiddenErrors,
+} = require('../errors/index');
+const {
+  ERROR_400_MESSAGE,
+  ERROR_404_MOVIE_MESSAGE,
+  ERROR_403_MESSAGE,
+  REMOVE_SUCCESSFULLY_MESSAGE,
+} = require('../Utils/constants');
 
 module.exports.createMovies = (req, res, next) => {
-  const {
-    nameRU,
-    nameEN,
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailerLink,
-    thumbnail,
-    movieId,
-  } = req.body;
-  Movie.create({
-    nameRU,
-    nameEN,
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailerLink,
-    thumbnail,
-    owner: req.user._id,
-    movieId,
-  })
+  Movie.create({ owner: req.user._id, ...req.body })
     .then((movies) => res.status(201).send(movies))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные'));
+        next(new BadRequestError(ERROR_400_MESSAGE));
         return;
       }
       next(err);
@@ -43,18 +25,18 @@ module.exports.createMovies = (req, res, next) => {
 
 module.exports.removeMovies = (req, res, next) => {
   Movie.findById(req.params.id)
-    .orFail(new NotFoundError('Фильм не найден'))
+    .orFail(new NotFoundError(ERROR_404_MOVIE_MESSAGE))
     .then((movie) => {
       const newLocalOwner = movie.owner.toString() === req.user._id;
       if (newLocalOwner) {
         return movie.remove()
-          .then(() => res.send({ message: 'Фильм  успешно удален' }));
+          .then(() => res.send({ message: REMOVE_SUCCESSFULLY_MESSAGE }));
       }
-      throw new ForbiddenErrors('Невозможно удалить чужой фильм');
+      throw new ForbiddenErrors(ERROR_403_MESSAGE);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError('Переданы некорректные данные'));
+        next(new BadRequestError(ERROR_400_MESSAGE));
         return;
       }
       next(err);
@@ -63,7 +45,7 @@ module.exports.removeMovies = (req, res, next) => {
 
 module.exports.getSavedMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
-    .orFail(new NotFoundError('Фильмы  не найдены'))
+    .orFail(new NotFoundError(ERROR_404_MOVIE_MESSAGE))
     .then((movies) => res.send(movies))
     .catch(next);
 };

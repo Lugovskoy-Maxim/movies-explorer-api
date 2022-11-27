@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
+const { REG_EXP_URL, BAD_URL_MESSAGE } = require('../Utils/constants');
 
 const urlValidator = {
-  validator(v) {
-    return /^https?:\/\/(www\.)?[0-9a-z\-._~:/?#[\]@!$&'()*+,;=]{1,}/i.test(v);
-  },
-  message: (value) => `${value} - некоректный формат ссылки`,
+  validator(value) { return REG_EXP_URL.test(value); },
+  message: (value) => `${value} - ${BAD_URL_MESSAGE}`,
 };
 
 const movieSchema = new mongoose.Schema(
