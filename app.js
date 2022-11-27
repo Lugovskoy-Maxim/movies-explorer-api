@@ -12,7 +12,7 @@ const rateLimiter = require('./middlewares/rateLimiter');
 
 const { NODE_ENV, MONGO_URL_PROD } = process.env;
 
-const { PORT = 3000, MANGO_URL = NODE_ENV === 'production' ? MONGO_URL_PROD : 'mongodb://localhost:27017/movies_dev' } = process.env; // localhost - выдеат ошибку на рабочем пк (дома проверить )
+const { PORT = 3000, MONGO_URL = NODE_ENV === 'production' ? MONGO_URL_PROD : 'mongodb://localhost:27017/movies_dev' } = process.env; // localhost - выдеат ошибку на рабочем пк (дома проверить )
 
 const app = express();
 app.use(cors);
@@ -22,7 +22,7 @@ app.use(cookieParser()); // анализирует файлЫ cookie, прикр
 app.use(express.json()); // анализирует входящие запросы с полезной нагрузкой JSON
 app.use(express.urlencoded({ extended: true })); // переназначает символы которые могут нанести вред
 app.use(rateLimiter);
-mongoose.connect(MANGO_URL); // подключение к БД
+mongoose.connect(MONGO_URL); // подключение к БД
 app.use(indexRouter); // роуты
 app.use(errorLogger); // логер ошибок
 app.use(celebrate.errors()); // обработчик ошибок валидации ссылок и почты из middleware/validation
