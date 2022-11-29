@@ -7,6 +7,7 @@ const ERROR_404_MOVIE_MESSAGE = 'Фильм не найден';
 const ERROR_404_USER_MESSAGE = 'Пользователь не найден';
 const ERROR_404_USER_BAD_ID_MESSAGE = 'Передан некорректный id';
 const ERROR_409_EMAIL_MESSAGE = 'Указанный адрес электронной почты уже используется';
+const ERROR_500_MESSAGE = 'На сервере произошла ошибка';
 const BAD_URL_MESSAGE = 'Некоректный формат ссылки';
 const BAD_EMAIL_MESSAGE = 'Некоректный формат почты';
 const REG_EXP_URL = /^https?:\/\/(www\.)?[0-9a-z\-._~:/?#[\]@!$&'()*+,;=]{1,}/i;
@@ -26,6 +27,7 @@ module.exports = {
   ERROR_404_USER_MESSAGE,
   ERROR_404_USER_BAD_ID_MESSAGE,
   ERROR_409_EMAIL_MESSAGE,
+  ERROR_500_MESSAGE,
   REMOVE_SUCCESSFULLY_MESSAGE,
   AUTH_SUCCESSFULLY_MESSAGE,
   REG_EXP_URL,
