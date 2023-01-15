@@ -1,8 +1,9 @@
 const allowedCors = [ // список разрешенных адресов
+  'https://api.nomoreparties.co/beatfilm-movies',
   'https://api.lugovskoy-movies.nomoredomains.club',
   'http://api.lugovskoy-movies.nomoredomains.club',
-  'https://jsdeveloper.ru',
-  'http://jsdeveloper.ru',
+  'https://movies-explorer.ru',
+  'http://movies-explorer.ru',
   'https://lugovskoy-movies.nomoredomains.club',
   'http://lugovskoy-movies.nomoredomains.club',
   'http://localhost:3000',
